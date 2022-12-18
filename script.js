@@ -11,12 +11,13 @@ class Produto{
             this.Salvar(produto)
         }
         this.Listar()
+        this.Cancelar()
     }
     
     lerDados(){
-        let Produto ={}
+        let produto ={}
        
-        produto.id = this.id;
+        produto.id = this.id
         produto.nomeProduto = document.getElementById('pdnome').value
         produto.precoProduto = document.getElementById('pdpreco').value
 
@@ -41,9 +42,9 @@ class Produto{
 
     Salvar(produto){
         this.arrayProdutos.push(produto)
-        this.id++;
+        this.id ++ ;
     }
-
+    
     Listar(){
         let tbody = document.getElementById('tbody')
         tbody.innerText = ''
@@ -62,9 +63,26 @@ class Produto{
             td_preco.innerText = this.arrayProdutos[i].precoProduto;
             let imagem = document.createElement('img')
             imagem.src = 'trash-can.png'
+            imagem.setAttribute("onclick", "produto.Deletar("+this.arrayProdutos[i].id+")")
             td_del.appendChild(imagem)
                         
         }
+    }
+    Cancelar(){
+        document.getElementById('pdnome').value = ''
+        document.getElementById('pdpreco').value = ''
+    }
+
+    Deletar(id){
+        let tbody = document.getElementById('tbody')
+        for (let i = 0; i < this.arrayProdutos.length; i++ ){
+            if(this.arrayProdutos[i].id == id){
+                this.arrayProdutos.splice(i, 1)
+                tbody.deleteRow(i)
+            }
+        }
+            alert('O item foi deletado com sucesso')
+
     }
 }
 
